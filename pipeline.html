@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>MiniC 管线对照：源码 → 指令 → 执行</title>
+    <link href="src/pipeline.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <h1>MiniC 三段管线对照</h1>
+        <p>
+            同一次编译产生的指令序列，既显示在中间一栏，也逐条喂给虚拟机执行。
+            右栏的执行轨迹里的每一条，都是从虚拟机内存里按 IP 实际读出来、再回中间一栏比对高亮的——
+            看到的指令和跑的指令是同一份。
+        </p>
+    </header>
+
+    <div id="status">正在加载沙盒（Blazor / mono.wasm）…</div>
+
+    <main id="pipeline" hidden>
+        <section class="pane">
+            <h2>① 源码</h2>
+            <div class="toolbar">
+                <label>示例程序：
+                    <select id="preset"></select>
+                </label>
+                <button id="compileBtn">编译 →</button>
+            </div>
+            <textarea id="source" spellcheck="false"></textarea>
+        </section>
+
+        <section class="pane">
+            <h2>② 生成的指令序列</h2>
+            <div class="toolbar legend">
+                <span class="chip chip-next">下一条（IP 指向）</span>
+                <span class="chip chip-done">已执行</span>
+            </div>
+            <pre id="instructions" class="empty">（点「编译 →」，这里显示 PrintInstructions 的原样输出）</pre>
+        </section>
+
+        <section class="pane">
+            <h2>③ 执行结果</h2>
+            <div class="toolbar">
+                <button id="stepBtn" disabled>单步</button>
+                <button id="runBtn" disabled>运行到底</button>
+                <button id="resetBtn" disabled>重置</button>
+            </div>
+            <div id="registers"></div>
+            <div id="result"></div>
+            <pre id="trace" class="empty">（执行轨迹：每一步先按 IP 从内存读出指令，执行后记录在此）</pre>
+        </section>
+    </main>
+
+    <pre id="selftest" hidden></pre>
+
+    <script src="framework/blazor.webassembly.js"></script>
+    <script src="src/pipeline.js"></script>
+</body>
+</html>

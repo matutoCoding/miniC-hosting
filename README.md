@@ -32,6 +32,22 @@ Join the discussion on our [subreddit](https://www.reddit.com/r/minic/).
 ## Support
 Consider [supporting](https://github.com/vasyop/miniC-hosting/blob/master/support.md) the project.
 
+## Pipeline view (source → instructions → result)
+
+Open `pipeline.html` (serve the folder statically, e.g. `python3 -m http.server`) to see the
+three-stage pipeline side by side for a few demo programs from the sandbox/tutorial:
+
+1. **Source** – the C program.
+2. **Generated instructions** – the compiler's disassembly (`PrintInstructions`),
+   verified cell-by-cell against VM memory (`MemorySlice` + `OpCodeToString`).
+3. **Execution result** – the VM single-steps (`Step`); before each step the instruction
+   pointer (`IP`) is read and the executed instruction is looked up in the very listing
+   shown in column 2, so what you see is literally what runs. The final value on the
+   stack is the program's output.
+
+Each program reports three checks: listing == memory image, executed trace == listed
+instructions, and final output == expected result.
+
 ## Documentation
 
 ### Virtual Instruction Set
